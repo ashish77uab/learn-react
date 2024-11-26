@@ -1,6 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
-import { productionSchema } from '../../utils/validation'
 
 const ProductForm = () => {
     const [form, setForm] = useState({
@@ -23,10 +21,9 @@ const ProductForm = () => {
     // setForm({})
 
 
-    const handleSubmit = (formData, formAction) => {
-        console.log(formAction)
-        formAction.resetForm()
-        console.log(formData, 'formData')
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(form, 'form')
 
     }
     // const handleSubmit = (e) => {
@@ -65,68 +62,10 @@ const ProductForm = () => {
 
     }
 
+    console.log(form, 'form')
     return (
-        <div className='max-w-md p-4'>
-
-            <Formik
-                initialValues={{
-                    title: '',
-                    description: '',
-                    price: '',
-                    // category: '',
-                    // color: {
-                    //     red: false,
-                    //     green: false,
-                    //     blue: false,
-                    // },
-
-                }}
-                validationSchema={productionSchema}
-                onSubmit={handleSubmit}
-                validateOnMount
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    isSubmitting,
-                    setFieldValue,
-                    // setFieldTouched,
-
-                }) => {
-                    // console.log(values, 'values')
-                    // console.log(errors, 'errors')
-                    console.log(isSubmitting, 'isSubmitting')
-                    return (
-                        <Form>
-                            <div className='flex flex-col gap-1'>
-                                <label htmlFor="title">Title</label>
-                                <input value={values.title} onChange={(e) => setFieldValue('title', e.target.value)} className='border border-red-500' type="text" id="title" name="title" required />
-                                <ErrorMessage name="title">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-
-                            </div>
-                            <div className='flex flex-col gap-1'>
-                                <label htmlFor="description">Description</label>
-                                <textarea value={values.description} onChange={handleChange} className='border border-red-500' id="description" name="description" required />
-                                <ErrorMessage name="description">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-                            </div>
-                            <div className='flex flex-col gap-1'>
-
-                                <label htmlFor="price">Price</label>
-                                <input value={values.price} onChange={handleChange} className='border border-red-500' type="number" id="price" name="price" required />
-                                <ErrorMessage name="price">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-
-                            </div>
-                            <button type="submit">Submit</button>
-                            {isSubmitting && 'Loading....'}
-                        </Form>
-                    )
-                }}
-            </Formik>
-            {/* <form onSubmit={handleSubmit} action="" className='p-4'>
+        <div className='max-w-md'>
+            <form onSubmit={handleSubmit} action="" className='p-4'>
                 <div className='flex flex-col gap-1'>
                     <label htmlFor="title">Title:</label>
                     <input value={form.title} onChange={handleChange} className='border border-red-500' type="text" id="title" name="title" required />
@@ -168,7 +107,7 @@ const ProductForm = () => {
                 </div>
 
                 <button type="submit">Submit</button>
-            </form> */}
+            </form>
 
         </div>
     )
