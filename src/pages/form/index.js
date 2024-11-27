@@ -1,6 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import React, { useState } from 'react'
 import { productionSchema } from '../../utils/validation'
+import TextInput from './TextInput'
+import Button from './Button'
 
 const ProductForm = () => {
     const [form, setForm] = useState({
@@ -15,7 +17,17 @@ const ProductForm = () => {
         },
 
     })
+    const [count, setCount] = useState(5)
+    // setCount((prevVal) => prevVal)
+    const handleClick = () => {
+        setCount(count + 1)
+        setCount(count + 1)
+        setCount(count + 1)
+        setCount(count + 1)
+        console.log(count, 'nine')
 
+    }
+    console.log(count, 'count')
 
 
 
@@ -65,14 +77,19 @@ const ProductForm = () => {
 
     }
 
+
     return (
         <div className='max-w-md p-4'>
-
-            <Formik
+            {true ? 'true' : 'false'}
+            <div className='mt-2'>
+                <Button onClick={handleClick} variant='primary' buttonText={'Click'} />
+            </div>
+            {/* <Formik
                 initialValues={{
                     title: '',
                     description: '',
                     price: '',
+                    productid: '',
                     // category: '',
                     // color: {
                     //     red: false,
@@ -102,30 +119,19 @@ const ProductForm = () => {
                     console.log(isSubmitting, 'isSubmitting')
                     return (
                         <Form>
-                            <div className='flex flex-col gap-1'>
-                                <label htmlFor="title">Title</label>
-                                <input value={values.title} onChange={(e) => setFieldValue('title', e.target.value)} className='border border-red-500' type="text" id="title" name="title" required />
-                                <ErrorMessage name="title">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-
+                            <TextInput value={values.productid} name='productid' onChange={handleChange} />
+                            <TextInput label={'Title'} value={values.title} name='title' onChange={handleChange} />
+                            <TextInput label={'Description'} value={values.description} name='description' onChange={handleChange} />
+                            <TextInput label={'Price'} type='number' value={values.price} name='price' onChange={handleChange} />
+                            <div className='mt-2'>
+                                <Button onClick={handleSubmit} variant='ghost' buttonText={'Submit'} icon={<div className='w-8 h-8 rounded-full bg-yellow-500'></div>} />
                             </div>
-                            <div className='flex flex-col gap-1'>
-                                <label htmlFor="description">Description</label>
-                                <textarea value={values.description} onChange={handleChange} className='border border-red-500' id="description" name="description" required />
-                                <ErrorMessage name="description">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-                            </div>
-                            <div className='flex flex-col gap-1'>
-
-                                <label htmlFor="price">Price</label>
-                                <input value={values.price} onChange={handleChange} className='border border-red-500' type="number" id="price" name="price" required />
-                                <ErrorMessage name="price">{msg => <div className='text-red-500 font-medium'>{msg}</div>}</ErrorMessage>
-
-                            </div>
-                            <button type="submit">Submit</button>
                             {isSubmitting && 'Loading....'}
                         </Form>
                     )
                 }}
-            </Formik>
+            </Formik> */}
+
             {/* <form onSubmit={handleSubmit} action="" className='p-4'>
                 <div className='flex flex-col gap-1'>
                     <label htmlFor="title">Title:</label>

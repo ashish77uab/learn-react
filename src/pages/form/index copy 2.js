@@ -1,6 +1,14 @@
 import React, { useState } from 'react'
 
+const Example = ({ setForm }) => {
+    return <div onClick={() => setForm((prevForm) => ({ ...prevForm, title: 'sdfjbksbcfsjk' }))}>
+
+    </div>
+}
+
 const ProductForm = () => {
+
+
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -57,7 +65,7 @@ const ProductForm = () => {
     const handleCheck = (e) => {
         const { name, checked } = e.target
         console.log(name, checked)
-        setForm({ ...form, color: { ...form.color, [name]: checked } })
+        setForm((prevFormVal) => ({ ...prevFormVal, color: { ...prevFormVal.color, [name]: checked } }))
 
 
     }
@@ -105,6 +113,8 @@ const ProductForm = () => {
 
 
                 </div>
+                <Example setForm={setForm} />
+
 
                 <button type="submit">Submit</button>
             </form>
