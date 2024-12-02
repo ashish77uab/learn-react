@@ -1,24 +1,42 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import moment from 'moment'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+    const counter = useSelector(state => state.counter)
+
+
     const [products, setProducts] = useState({})
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(1)
     const skip = (page - 1) * limit
-
-    const getProducts = async () => {
-        try {
-            const { data, status } = await axios.get(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`)
-            setProducts(data)
-        } catch (error) {
-            console.error(error)
-        }
+    function* fetchData() {
+        const productsPromise = yield fetch('https://dummyjson.com/products')
     }
 
+
     useEffect(() => {
-        getProducts()
-    }, [limit, skip])
+        const gen = fetchData();
+        const promise = gen.next().value;
+        promise.then(res => res.json()).then((data) => {
+            console.log(data, 'dat')
+        });
+    }, [])
+
+    // promise.then(data => gen.next(data));
+    // const getProducts = async () => {
+    //     try {
+    //         const { data, status } = await axios.get(`https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${moment().format('YYYY-MM-DD')}?apiKey=ryiHh0tUuDf6tTdFotqco0iNT0Cjn99_`)
+    //         setProducts(data)
+    //     } catch (error) {
+    //         console.error(error)
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     getProducts()
+    // }, [limit, skip])
     return (
         <div className=' p-4'>
             <div className="flex item-center gap-2">
