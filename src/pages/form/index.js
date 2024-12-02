@@ -1,50 +1,41 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext } from 'react'
 import Button from './Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrement, increment, incrementBy, reset } from '../../redux/counterAction';
+import { productAdd, productRemove } from '../../redux/productAction';
 export const ArrayContext = createContext(null);
-const initalNumber = 0
-const arrayChangeFunction = (state, action) => {
-    switch (action.type) {
-        case 'increment': {
-            return state + 1
-        }
-        case 'decrement': {
-            return state - 1
-        }
-        case 'reset': {
-            return initalNumber
-        }
-        case 'incrementby': {
-            return state + action.payload
-        }
-        default: {
-            return state
-        }
-    }
-    // if (action.type === 'increment') {
-    //     return state + 1
-    // } else if (action.type === 'decrement') {
-    //     return state - 1
-    // } else if (action.type === 'reset') {
-    //     return initalNumber
-    // } else if (action.type === 'incrementby5') {
-    //     return state + 5
-    // }
 
-}
 const ProductForm = () => {
-    const [state, dispatch] = useReducer(arrayChangeFunction, initalNumber)
+    const counter = useSelector(state => state.counter)
+    const products = useSelector(state => state.products)
+    const dispatch = useDispatch()
+    console.log(products, 'products')
+
     return (
-        <div className='max-w-md p-4'>
-            <div>
+        <div className='max-w-5xl p-4'>
+            <div className='text-center font-semibold text-2xl'>
                 {
-                    state
+                    products?.products?.map((product) => {
+                        return <div key={product.id} className='w-1/3 p-4 bg-slate-50 rounded-md'>
+                            <h1>{product.id}</h1>
+                            <h1>{product.name}</h1>
+                        </div>
+                    })
                 }
             </div>
-            <Button onClick={() => dispatch({ type: 'increment', payload: '' })} variant='primary' buttonText={'Increment'} />
-            <Button onClick={() => dispatch({ type: 'decrement', payload: '' })} variant='primary' buttonText={'Decrement'} />
-            <Button onClick={() => dispatch({ type: 'reset', payload: '' })} variant='primary' buttonText={'Reset'} />
-            <Button onClick={() => dispatch({ type: 'incrementby', payload: 10 })} variant='primary' buttonText={'Increment By 10'} />
+            <div className='flex items-center flex-wrap gap-4'>
+                <Button onClick={() => dispatch(increment())} variant='primary' buttonText={'Increment'} />
+                <Button onClick={() => dispatch(decrement())} variant='primary' buttonText={'Decrement'} />
+                <Button onClick={() => dispatch(reset())} variant='primary' buttonText={'Reset'} />
+                <Button onClick={() => dispatch(incrementBy(10))} variant='primary' buttonText={'Increment By 10'} />
 
+                <Button onClick={() => dispatch(increment())} variant='primary' buttonText={'Increment'} />
+            </div>
+            <div className='flex items-center flex-wrap gap-4 my-4'>
+                <Button onClick={() => dispatch(productAdd({ id: 2, name: 'Android' }))} variant='primary' buttonText={'Add Product'} />
+                <Button onClick={() => dispatch(productRemove({ id: 2 }))} variant='primary' buttonText={'Remove Product'} />
+
+            </div>
 
         </div>
     )
