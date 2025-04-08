@@ -36,10 +36,10 @@ const Home = () => {
             <div>
                 {/* <button className='px-4 py-1 bg-red-500 mb-4' onClick={addItem}>Add Item</button>
                 <button className='px-4 py-1 bg-blue-500 mb-4' onClick={handleClick}>Click here</button> */}
-                <button onClick={() => navigate("/signin", { state: { pathname: location?.pathname } })}>
+                <button className='checking-mode' onClick={() => navigate("/signin", { state: { pathname: location?.pathname } })}>
                     Open Sign In
                 </button>
-                <button onClick={() => navigate("/register", { state: { pathname: location?.pathname } })}>
+                <button className='checking-mode' onClick={() => navigate("/register", { state: { pathname: location?.pathname } })}>
                     Open Register
                 </button>
                 {/* <ul className='space-y-2'>

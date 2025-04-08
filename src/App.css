@@ -17,4 +17,10 @@
     width: 300px;
     text-align: center;
   }
+  .checking-mode{
   
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--primary);
+
+  }
