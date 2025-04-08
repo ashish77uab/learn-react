@@ -1,0 +1,6 @@
+@mixin theme($theme-map) {
+    --primary: #{map-get($theme-map, primary)};
+    --secondary: #{map-get($theme-map, secondary)};
+    --background: #{map-get($theme-map, background)};
+    --text: #{map-get($theme-map, text)};
+}

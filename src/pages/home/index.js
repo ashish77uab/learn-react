@@ -1,64 +1,52 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import moment from 'moment'
-import { useSelector } from 'react-redux'
+import ListItem from './ListItem';
+import { flushSync } from 'react-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useNetworkStatus from '../../component/useNetwork';
 
 const Home = () => {
-    const counter = useSelector(state => state.counter)
+    const [items, setItems] = useState(["Apple", "Banana", "Cherry"]);
+    const [count, setCount] = useState(1);
+    const [firstName, setFirstName] = useState('Ashish');
+    const [lastName, setLastName] = useState('lastName');
 
+    const addItem = () => {
+        setItems([...items, "New Fruit"]);
+    };
+    const removeItem = (indexN) => {
+        setItems(items?.filter((item, index) => index !== indexN));
+    };
+    const handleClick = (e) => {
+        // flushSync(() => {
+        //     setLastName('didi')
+        // })
+        setCount(1)
+        setFirstName('Pramod')
+        setTimeout(() => {
+            setLastName('singh')
+        }, 2000)
+    };
 
-    const [products, setProducts] = useState({})
-    const [limit, setLimit] = useState(10)
-    const [page, setPage] = useState(1)
-    const skip = (page - 1) * limit
-    function* fetchData() {
-        const productsPromise = yield fetch('https://dummyjson.com/products')
-    }
-
-
-    useEffect(() => {
-        const gen = fetchData();
-        const promise = gen.next().value;
-        promise.then(res => res.json()).then((data) => {
-            console.log(data, 'dat')
-        });
-    }, [])
-
-    // promise.then(data => gen.next(data));
-    // const getProducts = async () => {
-    //     try {
-    //         const { data, status } = await axios.get(`https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/${moment().format('YYYY-MM-DD')}?apiKey=ryiHh0tUuDf6tTdFotqco0iNT0Cjn99_`)
-    //         setProducts(data)
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getProducts()
-    // }, [limit, skip])
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { isOnline } = useNetworkStatus()
+    console.log('isOnline', isOnline)
     return (
         <div className=' p-4'>
-            <div className="flex item-center gap-2">
-                {[10, 15, 20, 25]?.map((item) => {
-                    return <button onClick={() => setLimit(item)} className={item === limit ? 'text-red-500 font-bold border border-gray-600 rounded-xl w-10 h-10 flex items-center gap-4 justify-center' : 'text-gray-500 font-bold border border-gray-600 rounded-xl w-10 h-10 flex items-center gap-4 justify-center'}>{item}</button>
-                })}
-
-            </div>
             <div>
-                {products?.products?.map((item) => {
-                    return <div>
-                        <h1>{item?.title}</h1>
-                    </div>
-                })
-
-                }
-            </div>
-            <div className="flex item-center gap-2">
-                {[1, 2, 3, 4, 5]?.map((item, index) => {
-                    return <button onClick={() => setPage(item)} className={page === item ? 'text-red-500 font-bold border border-gray-600 rounded-xl w-10 h-10 flex items-center gap-4 justify-center' : 'text-gray-500 font-bold border border-gray-600 rounded-xl w-10 h-10 flex items-center gap-4 justify-center'}>{item}</button>
-                })}
-
+                {/* <button className='px-4 py-1 bg-red-500 mb-4' onClick={addItem}>Add Item</button>
+                <button className='px-4 py-1 bg-blue-500 mb-4' onClick={handleClick}>Click here</button> */}
+                <button onClick={() => navigate("/signin", { state: { pathname: location?.pathname } })}>
+                    Open Sign In
+                </button>
+                <button onClick={() => navigate("/register", { state: { pathname: location?.pathname } })}>
+                    Open Register
+                </button>
+                {/* <ul className='space-y-2'>
+                    {items.map((item, index) => (
+                        <ListItem key={item} item={item} removeItem={removeItem} index={index} />
+                    ))}
+                </ul> */}
             </div>
 
 

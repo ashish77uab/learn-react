@@ -1,0 +1,10 @@
+@use 'themes';
+@use 'mixins';
+
+body.light {
+    @include mixins.theme(themes.$light-theme);
+}
+
+body.dark {
+    @include mixins.theme(themes.$dark-theme);
+}
