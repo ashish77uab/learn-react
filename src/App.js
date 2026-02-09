@@ -2,6 +2,12 @@
 import { BrowserRouter, Link, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import './App.css';
 import './scss/main.scss';
+import POCImageExtractor from './component/POCImageExtractor';
+import ParentOne from './component/ParentOne';
+import ChilldA from './component/ChilldA';
+import ChilldB from './component/ChilldB';
+import './component/OCR'
+import Stopwatch from './component/StopWatch';
 import Home from './pages/home';
 import Product from './pages/product';
 import ProductDetail from './pages/productDetail';
@@ -20,18 +26,27 @@ function App() {
   // Save the previous location in state if coming from another page
   const pathname = location.state?.pathname || location;
   return (
-    <div className="App ">
+    <div className="App  m-10">
+
+
+      <ParentOne>
+        {/* <ChilldA />
+        <ChilldB /> */}
+
+      </ParentOne>
+
+      {/* <POCImageExtractor /> */}
       <Provider store={store}>
-        {/* <div className="flex items-center gap-4 px-4 py-2">
+        <div className="flex items-center gap-4 px-4 py-2">
           <NavLink className={({ isActive }) => isActive ? 'font-bold text-red-600' : ''} to={'/'}>  Home</NavLink>
           <NavLink className={({ isActive }) => isActive ? 'font-bold text-red-600' : ''} to={'/product'}>  Product</NavLink>
           <NavLink className={({ isActive }) => isActive ? 'font-bold text-red-600' : ''} to={'/product-single/4566'}>  Apple Product</NavLink>
           <NavLink className={({ isActive }) => isActive ? 'font-bold text-red-600' : ''} to={'/create-product'}> Create Product</NavLink>
-        </div> */}
+        </div>
         <Routes location={pathname}>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/signin" element={<SignInModalWrapper />} /> */}
-          {/* <Route path="/register" element={<RegisterModalWrapper />} /> */}
+          <Route path="/signin" element={<SignInModalWrapper />} />
+          <Route path="/register" element={<RegisterModalWrapper />} />
           <Route path="/product" element={<Product />} />
           <Route path="/product-single/:productId" element={<ProductDetail />} />
           <Route path="/create-product" element={<ProductForm />} />
@@ -39,6 +54,8 @@ function App() {
         {location.pathname === "/signin" && <SignInModal closeModal={() => navigate(-1)} />}
         {location.pathname === "/register" && <RegisterModal closeModal={() => navigate(-1)} />}
       </Provider>
+
+      {/* <Stopwatch /> */}
     </div>
   );
 }

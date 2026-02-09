@@ -31,6 +31,26 @@ const Home = () => {
     const location = useLocation();
     const { isOnline } = useNetworkStatus()
     console.log('isOnline', isOnline)
+
+    useEffect(() => {
+        const controller = new AbortController();
+
+        fetch("https://dummyjson.com/products", { signal: controller.signal })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => {
+                console.log(err, 'error')
+                if (err.name === "AbortError") {
+                    console.log("Request cancelled");
+                } else {
+                    console.error(err);
+                }
+            });
+
+        // cleanup → cancels API on unmount
+        return () => controller.abort();
+    }, []);
+
     return (
         <div className=' p-4'>
             <div>
